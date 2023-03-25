@@ -1,11 +1,16 @@
-import React from "react";
+import { TaskType } from "../../types";
 
-export const Task = (props: {}) => {
+interface TaskProps {
+	task: TaskType;
+}
+
+export const Task = ({ task }: TaskProps) => {
 	return (
-		<div>
-			<p>{task.name}</p>
-			<p>{task.body}</p>
-			<input type="checkbox"></input>
+		<div className="task">
+			<h2 className="taskTitle">{task.title}</h2>
+			<p className="taskBody">{task.body}</p>
+			<p className="taskProject">{task.project}</p>
+			<button className="taskDelete">Delete</button>
 		</div>
 	);
 };

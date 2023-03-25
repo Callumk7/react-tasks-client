@@ -1,19 +1,26 @@
 import { useState } from "react";
-import "./App.css";
-import { TasksContainer } from "./components/tasks/TasksContainer";
+import { Task } from "./components";
 import { getTasks, getProjects } from "./utils/api";
 
 function App() {
+	const [tasks, setTasks] = useState([]);
+	const [projects, setProjects] = useState([]);
+
+	// temporary function to test api calls
 	const handleClick = async () => {
-		const tasks = await getTasks().then((res) => console.log(res));
-		const projects = await getProjects().then((res) => console.log(res));
+		const retrievedTasks = await getTasks();
+		const retrievedProjects = await getProjects();
+		setTasks(retrievedTasks);
+		setProjects(retrievedProjects);
 	};
 
 	return (
-		<div>
+		<div className="App">
 			<h1>tasks app</h1>
 			<button onClick={handleClick}>get all tasks</button>
-			<TasksContainer />
+			{tasks.map((task) => (
+				<Task key={task.id} task={task} />
+			))}
 		</div>
 	);
 }

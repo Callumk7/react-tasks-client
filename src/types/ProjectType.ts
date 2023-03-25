@@ -1,6 +1,6 @@
 import { TaskType } from "../types";
 
-export type ProjectType = {
+export interface ProjectType {
 	id: number;
 	title: string;
 	body: string | null;
@@ -8,4 +8,4 @@ export type ProjectType = {
 	archived: boolean;
 	deleted: boolean;
 	tasks: TaskType[];
-};
+}
