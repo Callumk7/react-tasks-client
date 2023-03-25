@@ -12,8 +12,6 @@ function App() {
 		getTasks().then((tasks) => setTasks(tasks));
 	}, []);
 
-	const handleCheckboxToggle = () => {};
-
 	// function to update task list with a new task
 	const addTask = (task: TaskType) => {
 		setTasks([...tasks, task]);
@@ -27,13 +25,7 @@ function App() {
 			<TaskForm addTask={addTask} />
 			{tasks.map((task) => {
 				tempKey++;
-				return (
-					<Task
-						key={tempKey}
-						task={task}
-						handleCheckboxToggle={handleCheckboxToggle}
-					/>
-				);
+				return <Task key={tempKey} task={task} />;
 			})}
 		</div>
 	);

@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 interface TaskProps {
 	task: TaskType;
-	handleCheckboxToggle: () => void;
 }
 
 const StyledTask = styled.div`
