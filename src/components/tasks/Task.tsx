@@ -1,16 +1,53 @@
 import { TaskType } from "../../types";
+import styled from "styled-components";
 
 interface TaskProps {
 	task: TaskType;
 }
 
+const StyledTask = styled.div`
+	border: 1px solid #ccc;
+	padding: 10px;
+	margin-bottom: 10px;
+	position: relative;
+`;
+
+const StyledTaskTitle = styled.h2`
+	font-weight: bold;
+	font-size: 16px;
+	margin-bottom: 5px;
+`;
+
+const StyledTaskBody = styled.p`
+	font-size: 14px;
+	margin-bottom: 10px;
+`;
+
+const StyledTaskProject = styled.p`
+	font-size: 12px;
+	margin-bottom: 5px;
+`;
+
+const StyledTaskDelete = styled.button`
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+`;
+
+const StyledTaskCheckbox = styled.input`
+	position: absolute;
+	top: 10px;
+	right: 10px;
+`;
+
 export const Task = ({ task }: TaskProps) => {
 	return (
-		<div className="task">
-			<h2 className="taskTitle">{task.title}</h2>
-			<p className="taskBody">{task.body}</p>
-			<p className="taskProject">{task.project}</p>
-			<button className="taskDelete">Delete</button>
-		</div>
+		<StyledTask>
+			<StyledTaskTitle>{task.title}</StyledTaskTitle>
+			<StyledTaskBody>{task.body}</StyledTaskBody>
+			<StyledTaskCheckbox type="checkbox" />
+			<StyledTaskProject>{task.project}</StyledTaskProject>
+			<StyledTaskDelete>Delete</StyledTaskDelete>
+		</StyledTask>
 	);
 };

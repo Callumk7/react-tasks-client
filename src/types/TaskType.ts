@@ -7,15 +7,13 @@
  * archived: boolean;
  * deleted: boolean;
  * project_id: number | null;
- * project: string | null;
  */
 export interface TaskType {
-	id: number;
+	id?: number;
 	title: string;
-	body: string;
+	body?: string;
 	completed: boolean;
 	archived: boolean;
 	deleted: boolean;
-	project_id: number | null;
-	project: string | null;
+	project_id?: number;
 }
