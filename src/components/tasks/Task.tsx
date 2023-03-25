@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 interface TaskProps {
 	task: TaskType;
+	handleCheckboxToggle: () => void;
 }
 
 const StyledTask = styled.div`
@@ -46,7 +47,6 @@ export const Task = ({ task }: TaskProps) => {
 			<StyledTaskTitle>{task.title}</StyledTaskTitle>
 			<StyledTaskBody>{task.body}</StyledTaskBody>
 			<StyledTaskCheckbox type="checkbox" />
-			<StyledTaskProject>{task.project}</StyledTaskProject>
 			<StyledTaskDelete>Delete</StyledTaskDelete>
 		</StyledTask>
 	);

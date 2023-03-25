@@ -2,7 +2,11 @@ import { useState } from "react";
 import { TaskType } from "../../types";
 import { createTask } from "../../utils/api";
 
-export const TaskForm = () => {
+type TaskFormProps = {
+	addTask: (task: TaskType) => void;
+};
+
+export const TaskForm = ({ addTask }: TaskFormProps) => {
 	const [taskTitle, setTaskTitle] = useState("");
 	const [taskBody, setTaskBody] = useState("");
 
@@ -30,15 +34,25 @@ export const TaskForm = () => {
 			deleted: false,
 		};
 		createTask(newTask);
+		addTask(newTask);
 		console.log(newTask);
+		setTaskTitle("");
+		setTaskBody("");
 	};
 
 	return (
 		<div>
-			<h1>Task Form</h1>
 			<form onSubmit={handleSubmit}>
-				<input type="text" onChange={handleTaskTitleChange} />
-				<input type="text" onChange={handleTaskBodyChange} />
+				<input
+					type="text"
+					onChange={handleTaskTitleChange}
+					value={taskTitle}
+				/>
+				<input
+					type="text"
+					onChange={handleTaskBodyChange}
+					value={taskBody}
+				/>
 				<button>Submit</button>
 			</form>
 		</div>
