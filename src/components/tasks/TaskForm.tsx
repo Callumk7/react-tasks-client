@@ -1,15 +1,46 @@
 import { useState } from "react";
 import { TaskType } from "../../types";
-import { createTask } from "../../utils/api";
+import styled from "styled-components";
 
 type TaskFormProps = {
 	addTask: (task: TaskType) => void;
 };
 
+const StyledFormContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+`;
+
+const StyledForm = styled.form`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+`;
+
+const StyledInput = styled.input`
+	margin: 5px;
+	padding: 5px;
+	border-radius: 5px;
+	border: 1px solid black;
+`;
+
+const StyledButton = styled.button`
+	margin: 10px;
+	padding: 5px, 10px;
+	border-radius: 5px;
+	border: none;
+	background-color: blue;
+	color: white;
+	font-weight: bold;
+	cursor: pointer;
+`;
+
 export const TaskForm = ({ addTask }: TaskFormProps) => {
 	const [taskTitle, setTaskTitle] = useState("");
 	const [taskBody, setTaskBody] = useState("");
 
+	// handle changes to the title field
 	const handleTaskTitleChange = (
 		event: React.ChangeEvent<HTMLInputElement>
 	) => {
@@ -17,6 +48,7 @@ export const TaskForm = ({ addTask }: TaskFormProps) => {
 		setTaskTitle(value);
 	};
 
+	// handle changes to the body field
 	const handleTaskBodyChange = (
 		event: React.ChangeEvent<HTMLInputElement>
 	) => {
@@ -24,6 +56,7 @@ export const TaskForm = ({ addTask }: TaskFormProps) => {
 		setTaskBody(value);
 	};
 
+	// handle form submission
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		const newTask: TaskType = {
@@ -33,28 +66,26 @@ export const TaskForm = ({ addTask }: TaskFormProps) => {
 			archived: false,
 			deleted: false,
 		};
-		createTask(newTask);
 		addTask(newTask);
-		console.log(newTask);
 		setTaskTitle("");
 		setTaskBody("");
 	};
 
 	return (
-		<div>
-			<form onSubmit={handleSubmit}>
-				<input
+		<StyledFormContainer>
+			<StyledForm onSubmit={handleSubmit}>
+				<StyledInput
 					type="text"
-					onChange={handleTaskTitleChange}
 					value={taskTitle}
-				/>
-				<input
+					onChange={handleTaskTitleChange}
+				></StyledInput>
+				<StyledInput
 					type="text"
-					onChange={handleTaskBodyChange}
 					value={taskBody}
-				/>
-				<button>Submit</button>
-			</form>
-		</div>
+					onChange={handleTaskBodyChange}
+				></StyledInput>
+				<StyledButton>Add a new task</StyledButton>
+			</StyledForm>
+		</StyledFormContainer>
 	);
 };

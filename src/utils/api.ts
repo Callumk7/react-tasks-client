@@ -2,7 +2,7 @@ import { ProjectType, TaskType } from "../types";
 import { API_URL } from "../../config";
 
 // API requests for tasks
-export const getTasks = async () => {
+export const getTasks = async (): Promise<TaskType[]> => {
 	const response = await fetch(`${API_URL}/tasks`);
 	return await response.json();
 };
@@ -20,6 +20,9 @@ export const createTask = async (task: TaskType) => {
 		},
 		body: JSON.stringify(task),
 	});
+	if (!response.ok) {
+		throw new Error(`failed to create task!`);
+	}
 	return await response.json();
 };
 
@@ -31,6 +34,23 @@ export const updateTask = async (task: TaskType) => {
 		},
 		body: JSON.stringify(task),
 	});
+	if (!response.ok) {
+		throw new Error(`failed to update task ${task.id}!`);
+	}
+	return await response.json();
+};
+
+export const markTaskAsDeleted = async (id: number) => {
+	const response = await fetch(`${API_URL}/tasks/${id}`, {
+		method: "PUT",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({ deleted: true }),
+	});
+	if (!response.ok) {
+		throw new Error(`failed to delete task ${id}!`);
+	}
 	return await response.json();
 };
 
