@@ -4,6 +4,7 @@ import styled from "styled-components";
 interface TaskProps {
 	task: TaskType;
 	deleteTask: (id: number) => void;
+	markTaskAsCompleted: (id: number) => void;
 }
 
 const StyledTask = styled.div`
@@ -42,10 +43,16 @@ const StyledTaskCheckbox = styled.input`
 	right: 10px;
 `;
 
-export const Task = ({ task, deleteTask }: TaskProps) => {
+export const Task = ({ task, deleteTask, markTaskAsCompleted }: TaskProps) => {
 	const handleDelete = () => {
 		if (typeof task.id === "number") {
 			deleteTask(task.id);
+		}
+	};
+
+	const handleTaskCompleted = () => {
+		if (typeof task.id === "number") {
+			markTaskAsCompleted(task.id);
 		}
 	};
 
@@ -53,7 +60,11 @@ export const Task = ({ task, deleteTask }: TaskProps) => {
 		<StyledTask>
 			<StyledTaskTitle>{task.title}</StyledTaskTitle>
 			<StyledTaskBody>{task.body}</StyledTaskBody>
-			<StyledTaskCheckbox type="checkbox" />
+			<StyledTaskCheckbox
+				type="checkbox"
+				onChange={handleTaskCompleted}
+				checked={task.completed}
+			/>
 			<StyledTaskDelete onClick={handleDelete}>Delete</StyledTaskDelete>
 		</StyledTask>
 	);

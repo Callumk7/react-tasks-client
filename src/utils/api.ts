@@ -1,19 +1,10 @@
 import { ProjectType, TaskType } from "../types";
 import { API_URL } from "../../config";
 
-interface TasksResponse {
-	tasks: TaskType[];
-}
-
-interface TaskResponse {
-	task: TaskType;
-}
-
 // API requests for tasks
 export const getTasks = async (): Promise<TaskType[]> => {
 	const response = await fetch(`${API_URL}/tasks`);
-	const data: TasksResponse = await response.json();
-	return data.tasks;
+	return await response.json();
 };
 
 export const getTask = async (id: number) => {
@@ -29,6 +20,9 @@ export const createTask = async (task: TaskType) => {
 		},
 		body: JSON.stringify(task),
 	});
+	if (!response.ok) {
+		throw new Error(`failed to create task!`);
+	}
 	return await response.json();
 };
 
@@ -40,6 +34,9 @@ export const updateTask = async (task: TaskType) => {
 		},
 		body: JSON.stringify(task),
 	});
+	if (!response.ok) {
+		throw new Error(`failed to update task ${task.id}!`);
+	}
 	return await response.json();
 };
 
@@ -51,6 +48,9 @@ export const markTaskAsDeleted = async (id: number) => {
 		},
 		body: JSON.stringify({ deleted: true }),
 	});
+	if (!response.ok) {
+		throw new Error(`failed to delete task ${id}!`);
+	}
 	return await response.json();
 };
 
