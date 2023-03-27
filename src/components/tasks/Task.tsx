@@ -3,13 +3,15 @@ import styled from "styled-components";
 
 interface TaskProps {
 	task: TaskType;
+	deleteTask: (id: number) => void;
 }
 
 const StyledTask = styled.div`
-	border: 1px solid #ccc;
 	padding: 10px;
 	margin-bottom: 10px;
 	position: relative;
+	border-radius: 8px;
+	background-color: #564568;
 `;
 
 const StyledTaskTitle = styled.h2`
@@ -40,13 +42,19 @@ const StyledTaskCheckbox = styled.input`
 	right: 10px;
 `;
 
-export const Task = ({ task }: TaskProps) => {
+export const Task = ({ task, deleteTask }: TaskProps) => {
+	const handleDelete = () => {
+		if (typeof task.id === "number") {
+			deleteTask(task.id);
+		}
+	};
+
 	return (
 		<StyledTask>
 			<StyledTaskTitle>{task.title}</StyledTaskTitle>
 			<StyledTaskBody>{task.body}</StyledTaskBody>
 			<StyledTaskCheckbox type="checkbox" />
-			<StyledTaskDelete>Delete</StyledTaskDelete>
+			<StyledTaskDelete onClick={handleDelete}>Delete</StyledTaskDelete>
 		</StyledTask>
 	);
 };
