@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Task } from "./components";
 import { TaskForm } from "./components/tasks/TaskForm";
-import { ProjectType, TaskType } from "./types";
+import { TaskType } from "./types";
 import {
 	getTasks,
 	updateTask,
@@ -12,16 +12,36 @@ import "./App.css";
 
 function App() {
 	const [tasks, setTasks] = useState<TaskType[]>([]);
+	const [isFetching, setIsFetching] = useState<boolean>(false);
 
 	// fetch tasks from the server
 	useEffect(() => {
-		console.log("fetching tasks...");
-		async function fetchTasks() {
-			const tasks = await getTasks();
-			setTasks(tasks);
-		}
+		// initial ping to wake up the server
+		console.log("pinging the server");
+		getTasks();
+
+		console.log("fetching tasks from the server");
+		let isMounted = true; // for cleanup function
+
+		const fetchTasks = async () => {
+			try {
+				setIsFetching(true);
+				const tasks = await getTasks();
+				if (isMounted) {
+					setTasks(tasks);
+					setIsFetching(false);
+				}
+			} catch (error) {
+				if (isMounted) {
+					setIsFetching(false);
+				}
+			}
+		};
 		fetchTasks();
-		console.log("tasks fetched");
+
+		return () => {
+			isMounted = false;
+		};
 	}, []);
 
 	// function to update task list with a new task
@@ -69,6 +89,7 @@ function App() {
 		<div className="App">
 			<h1>tasks app</h1>
 			<TaskForm addTask={addTask} />
+			{isFetching && <p>fetching tasks...</p>}
 			{tasks &&
 				tasks.map((task) => {
 					tempKey++;

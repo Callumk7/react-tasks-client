@@ -13,6 +13,10 @@ const StyledTask = styled.div`
 	position: relative;
 	border-radius: 8px;
 	background-color: #564568;
+	transition: transform 0.3s ease-out;
+	&.deleted {
+		transform: translateX(100%);
+	}
 `;
 
 const StyledTaskTitle = styled.h2`
