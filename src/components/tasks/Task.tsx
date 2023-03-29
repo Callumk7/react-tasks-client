@@ -1,5 +1,6 @@
 import { TaskType } from "../../types";
 import styled from "styled-components";
+import { StyledButton } from "../styles/StyledButton";
 
 interface TaskProps {
 	task: TaskType;
@@ -30,17 +31,6 @@ const StyledTaskBody = styled.p`
 	margin-bottom: 10px;
 `;
 
-const StyledTaskProject = styled.p`
-	font-size: 12px;
-	margin-bottom: 5px;
-`;
-
-const StyledTaskDelete = styled.button`
-	position: absolute;
-	bottom: 10px;
-	right: 10px;
-`;
-
 const StyledTaskCheckbox = styled.input`
 	position: absolute;
 	top: 10px;
@@ -69,7 +59,9 @@ export const Task = ({ task, deleteTask, markTaskAsCompleted }: TaskProps) => {
 				onChange={handleTaskCompleted}
 				checked={task.completed}
 			/>
-			<StyledTaskDelete onClick={handleDelete}>Delete</StyledTaskDelete>
+			<StyledButton warning onClick={handleDelete}>
+				Delete
+			</StyledButton>
 		</StyledTask>
 	);
 };

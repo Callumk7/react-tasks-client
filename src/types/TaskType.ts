@@ -5,5 +5,6 @@ export interface TaskType {
 	completed: boolean;
 	archived: boolean;
 	deleted: boolean;
-	project_id?: number;
+	projectId?: number;
+    createdAt: string;
 }
