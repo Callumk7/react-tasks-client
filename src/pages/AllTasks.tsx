@@ -13,19 +13,21 @@ export const AllTasks = ({
 	isFetching,
 	deleteTask,
 	markTaskAsCompleted,
-}: AllTasksProps) => (
-    <div>
-        {isFetching && <p>Loading...</p>}
+}: AllTasksProps) => {
+        return (
+            <div>
+                {isFetching && <p>Loading...</p>}
 
-        {tasks &&
-            tasks.map((task: TaskType) => {
-                return (
-                    <Task
-                        key={task.id}
-                        task={task}
-                        deleteTask={deleteTask}
-                        markTaskAsCompleted={markTaskAsCompleted} />
-                );
-            })}
-    </div>
-);
+                {tasks &&
+                    tasks.map((task: TaskType) => {
+                        return (
+                            <Task
+                                key={task.id}
+                                task={task}
+                                deleteTask={deleteTask}
+                                markTaskAsCompleted={markTaskAsCompleted} />
+                        );
+                    })}
+            </div>
+        );
+    };

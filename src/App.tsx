@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { TaskForm } from "./components/tasks/TaskForm";
 import { AllTasks } from "./pages/AllTasks";
-import { ProjectType, TaskType } from "./types";
+import { TaskType } from "./types";
 import {
 	fetchTasksFromServer,
 	updateTask,
@@ -27,7 +27,7 @@ function App() {
 	}, []);
 
 	// function to update task list with a new task
-	const addTask = (task: TaskType) => {
+	const addTask = (task: TaskType): void => {
 		try {
 			console.log("task added to local state");
 			createTask(task);
