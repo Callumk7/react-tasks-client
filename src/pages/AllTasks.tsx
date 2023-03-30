@@ -3,31 +3,32 @@ import { TaskType } from "../types";
 
 interface AllTasksProps {
 	tasks: TaskType[];
-	isFetching: boolean;
+	isFetchingTasks: boolean;
 	deleteTask: (id: number) => void;
 	markTaskAsCompleted: (id: number) => void;
 }
 
 export const AllTasks = ({
 	tasks,
-	isFetching,
+	isFetchingTasks,
 	deleteTask,
 	markTaskAsCompleted,
 }: AllTasksProps) => {
-        return (
-            <div>
-                {isFetching && <p>Loading...</p>}
+	return (
+		<div>
+			{isFetchingTasks && <p>Loading...</p>}
 
-                {tasks &&
-                    tasks.map((task: TaskType) => {
-                        return (
-                            <Task
-                                key={task.id}
-                                task={task}
-                                deleteTask={deleteTask}
-                                markTaskAsCompleted={markTaskAsCompleted} />
-                        );
-                    })}
-            </div>
-        );
-    };
+			{tasks &&
+				tasks.map((task: TaskType) => {
+					return (
+						<Task
+							key={task.id}
+							task={task}
+							deleteTask={deleteTask}
+							markTaskAsCompleted={markTaskAsCompleted}
+						/>
+					);
+				})}
+		</div>
+	);
+};
