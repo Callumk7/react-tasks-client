@@ -1,33 +1,34 @@
 import { useEffect, useState } from "react";
-import { Task } from "./components";
 import { TaskForm } from "./components/tasks/TaskForm";
-import { ProjectType, TaskType } from "./types";
+import { AllTasks } from "./pages/AllTasks";
+import { TaskType } from "./types";
 import {
-	getTasks,
+	fetchTasksFromServer,
 	updateTask,
 	markTaskAsDeleted,
 	createTask,
-} from "./utils/api";
+} from "./utils";
 import "./App.css";
 
 function App() {
+	// App contains the state for all tasks and projects for the user
+	// TODO: user login and authentication
 	const [tasks, setTasks] = useState<TaskType[]>([]);
+	const [isFetching, setIsFetching] = useState<boolean>(false);
 
-	// fetch tasks from the server
 	useEffect(() => {
-		console.log("fetching tasks...");
-		async function fetchTasks() {
-			const tasks = await getTasks();
-			setTasks(tasks);
-		}
-		fetchTasks();
-		console.log("tasks fetched");
+        const fetchTasks = async () => {
+            setIsFetching(true);
+            const tasks = await fetchTasksFromServer();
+            setTasks(tasks);
+            setIsFetching(false);
+        }
+        fetchTasks();
 	}, []);
 
 	// function to update task list with a new task
-	const addTask = (task: TaskType) => {
+	const addTask = (task: TaskType): void => {
 		try {
-			setTasks([...tasks, task]);
 			console.log("task added to local state");
 			createTask(task);
 		} catch (error) {
@@ -63,24 +64,15 @@ function App() {
 		}
 	};
 
-	let tempKey = 0;
-
 	return (
 		<div className="App">
-			<h1>tasks app</h1>
 			<TaskForm addTask={addTask} />
-			{tasks &&
-				tasks.map((task) => {
-					tempKey++;
-					return (
-						<Task
-							key={tempKey}
-							task={task}
-							deleteTask={deleteTask}
-							markTaskAsCompleted={markTaskAsCompleted}
-						/>
-					);
-				})}
+			<AllTasks
+				tasks={tasks}
+				isFetching={isFetching}
+				deleteTask={deleteTask}
+				markTaskAsCompleted={markTaskAsCompleted}
+			/>
 		</div>
 	);
 }
