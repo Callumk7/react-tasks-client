@@ -2,24 +2,38 @@ import { useEffect, useState } from "react";
 import { Link, Route, Routes } from "react-router-dom";
 import { TaskForm } from "./components/tasks/TaskForm";
 import { AllTasks } from "./pages/AllTasks";
-import { TaskType } from "./types";
+import { ProjectType, TaskType } from "./types";
 import { fetchTasksFromServer, updateTask, markTaskAsDeleted, createTask } from "./utils";
 import "./App.css";
+import { fetchProjectsFromServer } from "./utils/projectsApi";
+import NotFound from "./pages/NotFound";
+import { AllProjects } from "./pages/AllProjects";
+import Home from "./pages/Home";
 
 function App() {
 	// App contains the state for all tasks and projects for the user
 	// TODO: user login and authentication
 	const [tasks, setTasks] = useState<TaskType[]>([]);
-	const [isFetching, setIsFetching] = useState<boolean>(false);
+	const [isFetchingTasks, setIsFetchingTasks] = useState<boolean>(false);
+	const [projects, setProjects] = useState<ProjectType[]>([]);
+	const [isFetchingProjects, setIsFetchingProjects] = useState<boolean>(false);
 
+	// fetch tasks and projects from the server
 	useEffect(() => {
-		const fetchTasks = async () => {
-			setIsFetching(true);
-			const tasks = await fetchTasksFromServer();
-			setTasks(tasks);
-			setIsFetching(false);
+		const fetchDataFromServer = async () => {
+			setIsFetchingTasks(true);
+			setIsFetchingProjects(true);
+
+			const tasksData = await fetchTasksFromServer();
+			setTasks(tasksData);
+
+			const projectsData = await fetchProjectsFromServer();
+			setProjects(projectsData);
+
+			setIsFetchingTasks(false);
+			setIsFetchingProjects(false);
 		};
-		fetchTasks();
+		fetchDataFromServer();
 	}, []);
 
 	// function to update task list with a new task
@@ -61,32 +75,33 @@ function App() {
 	};
 
 	return (
-		<>
-			<nav>
-				<ul>
-					<li>
-						<Link to="/add">Add Task</Link>
-					</li>
-					<li>
-						<Link to="/">Home</Link>
-					</li>
-				</ul>
-			</nav>
+		<div className="App">
 			<Routes>
+				<Route path="/" element={<Home />} />
 				<Route
-					path="/"
+					path="/tasks"
 					element={
 						<AllTasks
 							tasks={tasks}
-							isFetching={isFetching}
-							markTaskAsCompleted={markTaskAsCompleted}
+							isFetchingTasks={isFetchingTasks}
 							deleteTask={deleteTask}
+							markTaskAsCompleted={markTaskAsCompleted}
 						/>
 					}
 				/>
-				<Route path="/add" element={<TaskForm addTask={addTask} />} />
+				<Route path="/tasks/new" element={<TaskForm addTask={addTask} />} />
+				<Route
+					path="/projects"
+					element={
+						<AllProjects
+							projects={projects}
+							isFetchingProjects={isFetchingProjects}
+						/>
+					}
+				/>
+				<Route path="*" element={<NotFound />} />
 			</Routes>
-		</>
+		</div>
 	);
 }
 
