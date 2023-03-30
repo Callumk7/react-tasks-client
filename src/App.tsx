@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
+import { Link, Route, Routes } from "react-router-dom";
 import { TaskForm } from "./components/tasks/TaskForm";
 import { AllTasks } from "./pages/AllTasks";
 import { TaskType } from "./types";
-import {
-	fetchTasksFromServer,
-	updateTask,
-	markTaskAsDeleted,
-	createTask,
-} from "./utils";
+import { fetchTasksFromServer, updateTask, markTaskAsDeleted, createTask } from "./utils";
 import "./App.css";
 
 function App() {
@@ -17,13 +13,13 @@ function App() {
 	const [isFetching, setIsFetching] = useState<boolean>(false);
 
 	useEffect(() => {
-        const fetchTasks = async () => {
-            setIsFetching(true);
-            const tasks = await fetchTasksFromServer();
-            setTasks(tasks);
-            setIsFetching(false);
-        }
-        fetchTasks();
+		const fetchTasks = async () => {
+			setIsFetching(true);
+			const tasks = await fetchTasksFromServer();
+			setTasks(tasks);
+			setIsFetching(false);
+		};
+		fetchTasks();
 	}, []);
 
 	// function to update task list with a new task
@@ -65,15 +61,32 @@ function App() {
 	};
 
 	return (
-		<div className="App">
-			<TaskForm addTask={addTask} />
-			<AllTasks
-				tasks={tasks}
-				isFetching={isFetching}
-				deleteTask={deleteTask}
-				markTaskAsCompleted={markTaskAsCompleted}
-			/>
-		</div>
+		<>
+			<nav>
+				<ul>
+					<li>
+						<Link to="/add">Add Task</Link>
+					</li>
+					<li>
+						<Link to="/">Home</Link>
+					</li>
+				</ul>
+			</nav>
+			<Routes>
+				<Route
+					path="/"
+					element={
+						<AllTasks
+							tasks={tasks}
+							isFetching={isFetching}
+							markTaskAsCompleted={markTaskAsCompleted}
+							deleteTask={deleteTask}
+						/>
+					}
+				/>
+				<Route path="/add" element={<TaskForm addTask={addTask} />} />
+			</Routes>
+		</>
 	);
 }
 
