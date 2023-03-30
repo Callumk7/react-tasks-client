@@ -27,7 +27,7 @@ function App() {
 	}, []);
 
 	// function to update task list with a new task
-	const addTask = (task: TaskType): void => {
+	const addTask = (task: TaskType) => {
 		try {
 			console.log("task added to local state");
 			createTask(task);

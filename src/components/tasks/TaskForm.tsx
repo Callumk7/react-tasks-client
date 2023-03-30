@@ -65,6 +65,7 @@ export const TaskForm = ({ addTask }: TaskFormProps) => {
 			completed: false,
 			archived: false,
 			deleted: false,
+            createdAt: new Date().toISOString(),
 		};
 		addTask(newTask);
 		setTaskTitle("");
