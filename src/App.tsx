@@ -1,21 +1,24 @@
+// react imports
 import { useEffect, useState } from "react";
 import { Link, Route, Routes } from "react-router-dom";
-import { TaskForm } from "./components/tasks/TaskForm";
-import { AllTasks } from "./pages/AllTasks";
+
+// components and pages
+import { TaskForm } from "./components";
+import { Home, AllTasks, AllProjects, NotFound } from "./pages";
+
+// types and utils
 import { ProjectType, TaskType } from "./types";
-import { fetchTasksFromServer, updateTask, markTaskAsDeleted, createTask } from "./utils";
+import { fetchTasksFromServer, createTask, fetchProjectsFromServer } from "./utils";
+
+// styles
 import "./App.css";
-import { fetchProjectsFromServer } from "./utils/projectsApi";
-import NotFound from "./pages/NotFound";
-import { AllProjects } from "./pages/AllProjects";
-import Home from "./pages/Home";
 
 function App() {
 	// App contains the state for all tasks and projects for the user
 	// TODO: user login and authentication
 	const [tasks, setTasks] = useState<TaskType[]>([]);
-	const [isFetchingTasks, setIsFetchingTasks] = useState<boolean>(false);
 	const [projects, setProjects] = useState<ProjectType[]>([]);
+	const [isFetchingTasks, setIsFetchingTasks] = useState<boolean>(false);
 	const [isFetchingProjects, setIsFetchingProjects] = useState<boolean>(false);
 
 	// fetch tasks and projects from the server
@@ -76,6 +79,21 @@ function App() {
 
 	return (
 		<div className="App">
+			<header>
+				<nav>
+					<ul>
+						<li>
+							<Link to="/tasks">Tasks</Link>
+						</li>
+						<li>
+							<Link to="/">Home</Link>
+						</li>
+						<li>
+							<Link to="/projects">Projects</Link>
+						</li>
+					</ul>
+				</nav>
+			</header>
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route

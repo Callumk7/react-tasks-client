@@ -1,23 +1,37 @@
-import { TaskType } from "../types";
+import { TaskType, ClientTaskType } from "../types";
 import { API_URL } from "../../config";
 
-// API requests for tasks
 export async function fetchTasksFromServer(): Promise<TaskType[]> {
-    try {
-        const response = await fetch(`${API_URL}/tasks`);
-        return await response.json();
-    } catch (error) {
-        console.error(error);
-        return [];
-    }
+	try {
+		const response = await fetch(`${API_URL}/tasks`);
+		return await response.json();
+	} catch (error) {
+		console.error(error);
+		return [];
+	}
 }
 
-export async function getTask(id: number) {
-    const response = await fetch(`${API_URL}/tasks/${id}`);
-    return await response.json();
+export async function getTaskById(id: number): Promise<string | TaskType> {
+	try {
+		const response = await fetch(`${API_URL}/tasks/${id}`);
+		return await response.json();
+	} catch (error) {
+		if (error instanceof Error) {
+			return error.message;
+		} else {
+			return "unknown error"; // TODO: check that this is fine error handling.
+		}
+	}
 }
+// Required Functions:
+// 1. get all tasks from the server
+// 2. get a single task from the server
+// 3. create a new task on the server
+// 4a. update a tasks title on the server
+// 4b. update a tasks completed status on the server
+// 5. delete a task on the server
 
-export const createTask = async (task: TaskType) => {
+export async function createTask(task: ClientTaskType): Promise<TaskType> {
 	const response = await fetch(`${API_URL}/tasks`, {
 		method: "POST",
 		headers: {
@@ -29,34 +43,6 @@ export const createTask = async (task: TaskType) => {
 		throw new Error(`failed to create task!`);
 	}
 	return await response.json();
-};
+}
 
-export const updateTask = async (task: TaskType) => {
-	const response = await fetch(`${API_URL}/tasks/${task.id}`, {
-		method: "PUT",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify(task),
-	});
-	if (!response.ok) {
-		throw new Error(`failed to update task ${task.id}!`);
-	}
-	return await response.json();
-};
-
-export const markTaskAsDeleted = async (id: number) => {
-	const response = await fetch(`${API_URL}/tasks/${id}`, {
-		method: "PUT",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({ deleted: true }),
-	});
-	if (!response.ok) {
-		throw new Error(`failed to delete task ${id}!`);
-	}
-	return await response.json();
-};
-
-
+export async function markTaskAsDeleted(id: number): Promise<TaskType> {}

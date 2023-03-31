@@ -1,7 +1,2 @@
-export {
-	getTask,
-	fetchTasksFromServer,
-	createTask,
-	updateTask,
-	markTaskAsDeleted,
-} from "./tasksApi";
+export { fetchTasksFromServer, getTaskById, createTask } from "./tasksApi";
+export { fetchProjectsFromServer, getProjectById, createProject } from "./projectsApi";
