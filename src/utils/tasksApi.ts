@@ -1,62 +1,79 @@
-import { TaskType } from "../types";
+import { TaskType, ClientTaskType } from "../types";
 import { API_URL } from "../../config";
 
-// API requests for tasks
 export async function fetchTasksFromServer(): Promise<TaskType[]> {
-    try {
-        const response = await fetch(`${API_URL}/tasks`);
-        return await response.json();
-    } catch (error) {
-        console.error(error);
-        return [];
-    }
+	try {
+		const response = await fetch(`${API_URL}/tasks`);
+		return await response.json();
+	} catch (error) {
+		console.error(error);
+		return [];
+	}
 }
 
-export async function getTask(id: number) {
-    const response = await fetch(`${API_URL}/tasks/${id}`);
-    return await response.json();
-}
-
-export const createTask = async (task: TaskType) => {
-	const response = await fetch(`${API_URL}/tasks`, {
+export async function postTaskToServer(task: ClientTaskType): Promise<Response> {
+	const options = {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify(task),
-	});
-	if (!response.ok) {
-		throw new Error(`failed to create task!`);
-	}
-	return await response.json();
-};
+	};
 
-export const updateTask = async (task: TaskType) => {
-	const response = await fetch(`${API_URL}/tasks/${task.id}`, {
-		method: "PUT",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify(task),
-	});
+	const response = await fetch(`${API_URL}/tasks`, options);
 	if (!response.ok) {
-		throw new Error(`failed to update task ${task.id}!`);
+		throw new Error(`failed to post task!`);
 	}
-	return await response.json();
-};
 
-export const markTaskAsDeleted = async (id: number) => {
-	const response = await fetch(`${API_URL}/tasks/${id}`, {
-		method: "PUT",
+	return response;
+}
+
+export async function markTaskAsDeletedOnServer(id: number): Promise<Response> {
+	const options = {
+		method: "PATCH",
 		headers: {
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify({ deleted: true }),
-	});
+	};
+
+	const response = await fetch(`${API_URL}/tasks/${id}`, options);
 	if (!response.ok) {
-		throw new Error(`failed to delete task ${id}!`);
+		throw new Error(`failed to mark task as deleted!`);
 	}
-	return await response.json();
-};
 
+	return response;
+}
 
+// Probably change this to a toggle completed function
+export async function toggleTaskCompletedOnServer(task: TaskType): Promise<Response> {
+	const options = {
+		method: "PATCH",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({ completed: !task.completed }),
+	};
+
+	const response = await fetch(`${API_URL}/tasks/${task.id}`, options);
+	if (!response.ok) {
+		throw new Error(`failed to toggle task completed!`);
+	}
+
+	return response;
+}
+
+// export async function markTaskAsCompletedOnServer(id: number): Promise<Response> {
+// 	const options = {
+// 		method: "PATCH",
+// 		headers: {
+// 			"Content-Type": "application/json",
+// 		},
+// 		body: JSON.stringify({ completed: true }),
+// 	};
+// 	const response = await fetch(`${API_URL}/tasks/${id}`, options);
+// 	if (!response.ok) {
+// 		throw new Error(`failed to mark task as completed!`);
+// 	}
+// 	return response;
+// }
