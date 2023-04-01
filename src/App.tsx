@@ -75,70 +75,71 @@ function App() {
 		} catch (error) {
 			console.log(error);
 		}
-
-		// function to mark a task as completed in the server
-		async function toggleCompleted(task: TaskType) {
-			try {
-				const taskToUpdate = tasks.find((t) => t.id === task.id);
-				if (taskToUpdate) {
-					console.log(`task ${id} found..`);
-					const response = await toggleTaskCompletedOnServer(task);
-					if (response.ok) {
-						taskToUpdate.completed = !taskToUpdate.completed;
-						setTasks([...tasks]);
-						console.log(`task ${id} marked as completed`);
-					}
-				}
-			} catch (error) {
-				console.log(error);
-			}
-		}
-
-		return (
-			<div className="App">
-				<header>
-					<nav>
-						<ul>
-							<li>
-								<Link to="/tasks">Tasks</Link>
-							</li>
-							<li>
-								<Link to="/">Home</Link>
-							</li>
-							<li>
-								<Link to="/projects">Projects</Link>
-							</li>
-						</ul>
-					</nav>
-				</header>
-
-				<Routes>
-					<Route path="/" element={<Home />} />
-					<Route
-						path="/tasks"
-						element={
-							<AllTasks
-								tasks={tasks}
-								isFetchingTasks={isFetchingTasks}
-								deleteTask={deleteTask}
-								toggleTaskCompleted={toggleCompleted}
-							/>
-						}
-					/>
-					<Route path="/tasks/new" element={<TaskForm addTask={addTask} />} />
-					<Route
-						path="/projects"
-						element={
-							<AllProjects
-								projects={projects}
-								isFetchingProjects={isFetchingProjects}
-							/>
-						}
-					/>
-					<Route path="*" element={<NotFound />} />
-				</Routes>
-			</div>
-		);
 	}
+
+	// function to mark a task as completed in the server
+	async function toggleCompleted(task: TaskType) {
+		try {
+			const taskToUpdate = tasks.find((t) => t.id === task.id);
+			if (taskToUpdate) {
+				console.log(`task ${task.id} found..`);
+				const response = await toggleTaskCompletedOnServer(task);
+				if (response.ok) {
+					taskToUpdate.completed = !taskToUpdate.completed;
+					setTasks([...tasks]);
+					console.log(`task ${task.id} marked as completed`);
+				}
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
+	return (
+		<div className="App">
+			<header>
+				<nav>
+					<ul>
+						<li>
+							<Link to="/tasks">Tasks</Link>
+						</li>
+						<li>
+							<Link to="/">Home</Link>
+						</li>
+						<li>
+							<Link to="/projects">Projects</Link>
+						</li>
+					</ul>
+				</nav>
+			</header>
+
+			<Routes>
+				<Route path="/" element={<Home />} />
+				<Route
+					path="/tasks"
+					element={
+						<AllTasks
+							tasks={tasks}
+							isFetchingTasks={isFetchingTasks}
+							deleteTask={deleteTask}
+							toggleTaskCompleted={toggleCompleted}
+						/>
+					}
+				/>
+				<Route path="/tasks/new" element={<TaskForm addTask={addTask} />} />
+				<Route
+					path="/projects"
+					element={
+						<AllProjects
+							projects={projects}
+							isFetchingProjects={isFetchingProjects}
+						/>
+					}
+				/>
+				<Route path="*" element={<NotFound />} />
+			</Routes>
+		</div>
+	);
 }
+
 export default App;
