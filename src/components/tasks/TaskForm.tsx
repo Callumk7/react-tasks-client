@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { TaskType } from "../../types";
+import { ClientTaskType } from "../../types";
 import styled from "styled-components";
 
 type TaskFormProps = {
-	addTask: (task: TaskType) => void;
+	addTask: (task: ClientTaskType) => void;
 };
 
 const StyledFormContainer = styled.div`
@@ -41,17 +41,13 @@ export const TaskForm = ({ addTask }: TaskFormProps) => {
 	const [taskBody, setTaskBody] = useState("");
 
 	// handle changes to the title field
-	const handleTaskTitleChange = (
-		event: React.ChangeEvent<HTMLInputElement>
-	) => {
+	const handleTaskTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { value } = event.target;
 		setTaskTitle(value);
 	};
 
 	// handle changes to the body field
-	const handleTaskBodyChange = (
-		event: React.ChangeEvent<HTMLInputElement>
-	) => {
+	const handleTaskBodyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { value } = event.target;
 		setTaskBody(value);
 	};
@@ -59,13 +55,13 @@ export const TaskForm = ({ addTask }: TaskFormProps) => {
 	// handle form submission
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		const newTask: TaskType = {
+		const newTask: ClientTaskType = {
 			title: taskTitle,
 			body: taskBody,
 			completed: false,
 			archived: false,
 			deleted: false,
-            createdAt: new Date().toISOString(),
+			createdAt: new Date().toISOString(),
 		};
 		addTask(newTask);
 		setTaskTitle("");
