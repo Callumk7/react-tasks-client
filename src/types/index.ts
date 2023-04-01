@@ -1,2 +1,2 @@
-export type { TaskType } from "./TaskType";
-export type { ProjectType } from "./ProjectType";
+export type { TaskType, ClientTaskType } from "./TaskType";
+export type { ProjectType, ClientProjectType } from "./ProjectType";
