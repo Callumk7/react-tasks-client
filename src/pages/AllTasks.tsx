@@ -5,14 +5,14 @@ interface AllTasksProps {
 	tasks: TaskType[];
 	isFetchingTasks: boolean;
 	deleteTask: (id: number) => void;
-	markTaskAsCompleted: (id: number) => void;
+	toggleTaskCompleted: (task: TaskType) => void;
 }
 
 export const AllTasks = ({
 	tasks,
 	isFetchingTasks,
 	deleteTask,
-	markTaskAsCompleted,
+	toggleTaskCompleted,
 }: AllTasksProps) => {
 	return (
 		<div>
@@ -25,7 +25,7 @@ export const AllTasks = ({
 							key={task.id}
 							task={task}
 							deleteTask={deleteTask}
-							markTaskAsCompleted={markTaskAsCompleted}
+							toggleTaskCompleted={toggleTaskCompleted}
 						/>
 					);
 				})}

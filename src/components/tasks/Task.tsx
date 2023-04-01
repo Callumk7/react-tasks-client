@@ -5,7 +5,7 @@ import { StyledButton } from "../styles/StyledButton";
 interface TaskProps {
 	task: TaskType;
 	deleteTask: (id: number) => void;
-	markTaskAsCompleted: (id: number) => void;
+	toggleTaskCompleted: (task: TaskType) => void;
 }
 
 const StyledTask = styled.div`
@@ -37,17 +37,15 @@ const StyledTaskCheckbox = styled.input`
 	right: 10px;
 `;
 
-export const Task = ({ task, deleteTask, markTaskAsCompleted }: TaskProps) => {
+export const Task = ({ task, deleteTask, toggleTaskCompleted }: TaskProps) => {
 	const handleDelete = () => {
 		if (typeof task.id === "number") {
 			deleteTask(task.id);
 		}
 	};
 
-	const handleTaskCompleted = () => {
-		if (typeof task.id === "number") {
-			markTaskAsCompleted(task.id);
-		}
+	const handleCompletedToggled = () => {
+		toggleTaskCompleted(task);
 	};
 
 	return (
@@ -56,7 +54,7 @@ export const Task = ({ task, deleteTask, markTaskAsCompleted }: TaskProps) => {
 			<StyledTaskBody>{task.body}</StyledTaskBody>
 			<StyledTaskCheckbox
 				type="checkbox"
-				onChange={handleTaskCompleted}
+				onChange={handleCompletedToggled}
 				checked={task.completed}
 			/>
 			<StyledButton warning onClick={handleDelete}>

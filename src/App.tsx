@@ -7,15 +7,21 @@ import { TaskForm } from "./components";
 import { Home, AllTasks, AllProjects, NotFound } from "./pages";
 
 // types and utils
-import { ProjectType, TaskType } from "./types";
-import { fetchTasksFromServer, createTask, fetchProjectsFromServer } from "./utils";
+import { ClientTaskType, ProjectType, TaskType } from "./types";
+import {
+	fetchTasksFromServer,
+	postTaskToServer,
+	fetchProjectsFromServer,
+	markTaskAsDeletedOnServer,
+	// markTaskAsCompletedOnServer,
+	toggleTaskCompletedOnServer,
+} from "./utils";
 
 // styles
 import "./App.css";
 
 function App() {
 	// App contains the state for all tasks and projects for the user
-	// TODO: user login and authentication
 	const [tasks, setTasks] = useState<TaskType[]>([]);
 	const [projects, setProjects] = useState<ProjectType[]>([]);
 	const [isFetchingTasks, setIsFetchingTasks] = useState<boolean>(false);
@@ -40,87 +46,99 @@ function App() {
 	}, []);
 
 	// function to update task list with a new task
-	const addTask = (task: TaskType) => {
+	async function addTask(task: ClientTaskType) {
 		try {
-			console.log("task added to local state");
-			createTask(task);
-		} catch (error) {
-			console.log(error);
-		}
-		console.log("task sent to the server");
-	};
-
-	// function to mark a task as deleted in the server
-	const deleteTask = (id: number) => {
-		try {
-			setTasks(tasks.filter((task) => task.id !== id));
-			markTaskAsDeleted(id);
-			console.log(`task with id ${id} deleted`);
-		} catch (error) {
-			console.log(error);
-		}
-	};
-
-	// function to mark a task as completed in the server
-	const markTaskAsCompleted = (id: number) => {
-		try {
-			// logic to mark task as completed goes here...
-			const task = tasks.find((task) => task.id === id);
-			if (task) {
-				task.completed = true;
-				updateTask(task);
-				setTasks([...tasks]);
-				console.log(`task with id ${id} marked as completed`);
+			const response = await postTaskToServer(task);
+			if (response.ok) {
+				const newTask = await response.json();
+				setTasks([...tasks, newTask]);
+				console.log(`task ${newTask.id}, "${newTask.title}" added`);
 			}
 		} catch (error) {
 			console.log(error);
 		}
-	};
+	}
 
-	return (
-		<div className="App">
-			<header>
-				<nav>
-					<ul>
-						<li>
-							<Link to="/tasks">Tasks</Link>
-						</li>
-						<li>
-							<Link to="/">Home</Link>
-						</li>
-						<li>
-							<Link to="/projects">Projects</Link>
-						</li>
-					</ul>
-				</nav>
-			</header>
-			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route
-					path="/tasks"
-					element={
-						<AllTasks
-							tasks={tasks}
-							isFetchingTasks={isFetchingTasks}
-							deleteTask={deleteTask}
-							markTaskAsCompleted={markTaskAsCompleted}
-						/>
+	// function to mark a task as deleted in the server
+	async function deleteTask(id: number) {
+		try {
+			const task = tasks.find((task) => task.id === id);
+			if (task) {
+				const response = await markTaskAsDeletedOnServer(id);
+				if (response.ok) {
+					setTasks(tasks.filter((task) => task.id !== id));
+					console.log(`task ${id} deleted`);
+				}
+			} else {
+				console.log(`task ${id} not found`);
+			}
+		} catch (error) {
+			console.log(error);
+		}
+
+		// function to mark a task as completed in the server
+		async function toggleCompleted(task: TaskType) {
+			try {
+				const taskToUpdate = tasks.find((t) => t.id === task.id);
+				if (taskToUpdate) {
+					console.log(`task ${id} found..`);
+					const response = await toggleTaskCompletedOnServer(task);
+					if (response.ok) {
+						taskToUpdate.completed = !taskToUpdate.completed;
+						setTasks([...tasks]);
+						console.log(`task ${id} marked as completed`);
 					}
-				/>
-				<Route path="/tasks/new" element={<TaskForm addTask={addTask} />} />
-				<Route
-					path="/projects"
-					element={
-						<AllProjects
-							projects={projects}
-							isFetchingProjects={isFetchingProjects}
-						/>
-					}
-				/>
-				<Route path="*" element={<NotFound />} />
-			</Routes>
-		</div>
-	);
+				}
+			} catch (error) {
+				console.log(error);
+			}
+		}
+
+		return (
+			<div className="App">
+				<header>
+					<nav>
+						<ul>
+							<li>
+								<Link to="/tasks">Tasks</Link>
+							</li>
+							<li>
+								<Link to="/">Home</Link>
+							</li>
+							<li>
+								<Link to="/projects">Projects</Link>
+							</li>
+						</ul>
+					</nav>
+				</header>
+
+				<Routes>
+					<Route path="/" element={<Home />} />
+					<Route
+						path="/tasks"
+						element={
+							<AllTasks
+								tasks={tasks}
+								isFetchingTasks={isFetchingTasks}
+								deleteTask={deleteTask}
+								toggleTaskCompleted={toggleCompleted}
+							/>
+						}
+					/>
+					<Route path="/tasks/new" element={<TaskForm addTask={addTask} />} />
+					<Route
+						path="/projects"
+						element={
+							<AllProjects
+								projects={projects}
+								isFetchingProjects={isFetchingProjects}
+							/>
+						}
+					/>
+					<Route path="*" element={<NotFound />} />
+				</Routes>
+			</div>
+		);
+	}
 }
-
 export default App;
