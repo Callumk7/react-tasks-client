@@ -20,6 +20,8 @@ import {
 // styles
 import "./App.css";
 
+let didFetch = false;
+
 function App() {
 	// App contains the state for all tasks and projects for the user
 	const [tasks, setTasks] = useState<TaskType[]>([]);
@@ -27,23 +29,28 @@ function App() {
 	const [isFetchingTasks, setIsFetchingTasks] = useState<boolean>(false);
 	const [isFetchingProjects, setIsFetchingProjects] = useState<boolean>(false);
 
-	// fetch tasks and projects from the server
 	useEffect(() => {
-		const fetchDataFromServer = async () => {
-			setIsFetchingTasks(true);
-			setIsFetchingProjects(true);
-
-			const tasksData = await fetchTasksFromServer();
-			setTasks(tasksData);
-
-			const projectsData = await fetchProjectsFromServer();
-			setProjects(projectsData);
-
-			setIsFetchingTasks(false);
-			setIsFetchingProjects(false);
-		};
-		fetchDataFromServer();
+		if (!didFetch) {
+			// only fetch data once -- makes app more reslient to errors
+			didFetch = true;
+			fetchDataFromServer();
+		}
 	}, []);
+
+	// fetch tasks and projects from the server
+	async function fetchDataFromServer(): Promise<void> {
+		setIsFetchingTasks(true);
+		setIsFetchingProjects(true);
+
+		const tasksData = await fetchTasksFromServer();
+		setTasks(tasksData);
+
+		const projectsData = await fetchProjectsFromServer();
+		setProjects(projectsData);
+
+		setIsFetchingTasks(false);
+		setIsFetchingProjects(false);
+	}
 
 	// function to update task list with a new task
 	async function addTask(task: ClientTaskType) {
