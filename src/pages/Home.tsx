@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Heading } from "../components/styles/Heading";
 
 const Container = styled.div`
 	display: flex;
@@ -7,12 +8,6 @@ const Container = styled.div`
 	align-items: center;
 	justify-content: center;
 	height: 100vh;
-`;
-
-const Heading = styled.h1`
-	font-size: 3rem;
-	font-weight: bold;
-	margin-bottom: 1rem;
 `;
 
 const Paragraph = styled.p`

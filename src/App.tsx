@@ -17,9 +17,6 @@ import {
 	toggleTaskCompletedOnServer,
 } from "./utils";
 
-// styles
-import "./App.css";
-
 let didFetch = false;
 
 function App() {
