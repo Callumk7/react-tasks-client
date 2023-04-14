@@ -13,7 +13,6 @@ import {
 	postTaskToServer,
 	fetchProjectsFromServer,
 	markTaskAsDeletedOnServer,
-	// markTaskAsCompletedOnServer,
 	toggleTaskCompletedOnServer,
 } from "./utils";
 
