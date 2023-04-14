@@ -1,10 +1,6 @@
 import { useState } from "react";
-import { ClientTaskType } from "../../types";
+import { ClientTaskType, ProjectType } from "../../types";
 import styled from "styled-components";
-
-type TaskFormProps = {
-	addTask: (task: ClientTaskType) => void;
-};
 
 const StyledFormContainer = styled.div`
 	display: flex;
@@ -36,9 +32,15 @@ const StyledButton = styled.button`
 	cursor: pointer;
 `;
 
-export const TaskForm = ({ addTask }: TaskFormProps) => {
+type TaskFormProps = {
+	addTask: (task: ClientTaskType) => void;
+	projects: ProjectType[];
+};
+
+export const TaskForm = ({ addTask, projects }: TaskFormProps) => {
 	const [taskTitle, setTaskTitle] = useState("");
 	const [taskBody, setTaskBody] = useState("");
+	const [taskProjectId, setTaskProjectId] = useState<number | undefined>(1);
 
 	// handle changes to the title field
 	const handleTaskTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,10 +64,17 @@ export const TaskForm = ({ addTask }: TaskFormProps) => {
 			archived: false,
 			deleted: false,
 			createdAt: new Date().toISOString(),
+			projectId: taskProjectId,
 		};
 		addTask(newTask);
 		setTaskTitle("");
 		setTaskBody("");
+	};
+
+	// handle changes to the project dropdown
+	const handleProjectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+		const { value } = event.target;
+		setTaskProjectId(Number(value));
 	};
 
 	return (
@@ -81,6 +90,14 @@ export const TaskForm = ({ addTask }: TaskFormProps) => {
 					value={taskBody}
 					onChange={handleTaskBodyChange}
 				></StyledInput>
+
+				<select onChange={handleProjectChange}>
+					{projects.map((project) => (
+						<option key={project.id} value={project.id}>
+							{project.title}
+						</option>
+					))}
+				</select>
 				<StyledButton>Add a new task</StyledButton>
 			</StyledForm>
 		</StyledFormContainer>

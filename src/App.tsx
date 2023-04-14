@@ -127,19 +127,27 @@ function App() {
 					element={
 						<AllTasks
 							tasks={tasks}
+							projects={projects}
 							isFetchingTasks={isFetchingTasks}
+							addTask={addTask}
 							deleteTask={deleteTask}
 							toggleTaskCompleted={toggleCompleted}
 						/>
 					}
 				/>
-				<Route path="/tasks/new" element={<TaskForm addTask={addTask} />} />
+				<Route
+					path="/tasks/new"
+					element={<TaskForm addTask={addTask} projects={projects} />}
+				/>
 				<Route
 					path="/projects"
 					element={
 						<AllProjects
+							tasks={tasks}
 							projects={projects}
 							isFetchingProjects={isFetchingProjects}
+							deleteTask={deleteTask}
+							toggleTaskCompleted={toggleCompleted}
 						/>
 					}
 				/>
