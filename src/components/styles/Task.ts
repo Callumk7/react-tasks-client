@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { theme } from "./theme";
 
 export const StyledTask = styled.div`
-	background-color: ${theme.colors.quaternary};
+	background-color: ${theme.colors.muted};
 	border-radius: 5px;
 	padding: 10px;
 	margin: 10px;
@@ -19,7 +19,7 @@ export const StyledTaskTitle = styled.h2`
 export const StyledTaskBody = styled.p`
 	font-family: ${theme.fonts.primary};
 	font-size: 1rem;
-	color: ${theme.colors.secondary};
+	color: ${theme.colors.text};
 	margin-bottom: 10px;
 `;
 

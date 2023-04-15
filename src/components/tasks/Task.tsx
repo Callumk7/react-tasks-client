@@ -5,7 +5,6 @@ import {
 	StyledTaskCheckbox,
 	StyledTaskTitle,
 } from "../styles";
-import { StyledButton } from "../styles/StyledButton";
 
 interface TaskProps {
 	task: TaskType;
@@ -33,9 +32,6 @@ export const Task = ({ task, deleteTask, toggleTaskCompleted }: TaskProps) => {
 				onChange={handleCompletedToggled}
 				checked={task.completed}
 			/>
-			<StyledButton warning onClick={handleDelete}>
-				Delete
-			</StyledButton>
 		</StyledTask>
 	);
 };

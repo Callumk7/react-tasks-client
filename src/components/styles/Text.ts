@@ -18,7 +18,7 @@ export const Subheading = styled.h2`
 `;
 
 export const Paragraph = styled.p`
-	color: ${theme.colors.secondary};
+	color: ${theme.colors.text};
 	font-family: ${theme.fonts.primary};
 	font-size: 1rem;
 	margin-bottom: 1rem;

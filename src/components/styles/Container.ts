@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { theme } from "./theme";
 
 export const Container = styled.div`
 	display: flex;
@@ -6,4 +7,5 @@ export const Container = styled.div`
 	align-items: center;
 	justify-content: center;
 	height: 100vh;
+	background: ${theme.colors.background};
 `;
