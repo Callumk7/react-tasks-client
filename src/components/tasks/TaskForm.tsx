@@ -47,25 +47,6 @@ export const TaskForm = ({ addTask, projects }: TaskFormProps) => {
 		setTaskProjectId(Number(value));
 	};
 
-	return newFunction(
-		handleSubmit,
-		taskTitle,
-		handleTaskTitleChange,
-		taskBody,
-		handleTaskBodyChange,
-		handleProjectChange,
-		projects
-	);
-};
-function newFunction(
-	handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void,
-	taskTitle: string,
-	handleTaskTitleChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
-	taskBody: string,
-	handleTaskBodyChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
-	handleProjectChange: (event: React.ChangeEvent<HTMLSelectElement>) => void,
-	projects: ProjectType[]
-) {
 	return (
 		<StyledFormContainer>
 			<StyledForm onSubmit={handleSubmit}>
@@ -91,4 +72,4 @@ function newFunction(
 			</StyledForm>
 		</StyledFormContainer>
 	);
-}
+};

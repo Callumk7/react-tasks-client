@@ -1,7 +1,12 @@
 import { useState } from "react";
+import { ClientProjectType } from "../../types";
 import { StyledButton, StyledForm, StyledFormContainer, StyledInput } from "../styles";
 
-export const ProjectForm = () => {
+interface ProjectFormProps {
+	addProject: (project: ClientProjectType) => void;
+}
+
+export const ProjectForm = ({ addProject }: ProjectFormProps) => {
 	const [projectTitle, setProjectTitle] = useState<string>("");
 	const [projectBody, setProjectBody] = useState<string>("");
 
@@ -17,7 +22,17 @@ export const ProjectForm = () => {
 
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		console.log(projectTitle, projectBody);
+		const newProject: ClientProjectType = {
+			title: projectTitle,
+			body: projectBody,
+			archived: false,
+			completed: false,
+			deleted: false,
+			createdAt: new Date().toISOString(),
+		};
+		addProject(newProject);
+		setProjectTitle("");
+		setProjectBody("");
 	};
 
 	return (

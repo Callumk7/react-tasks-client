@@ -7,13 +7,14 @@ import { TaskForm } from "./components";
 import { Home, AllTasks, AllProjects, NotFound } from "./pages";
 
 // types and utils
-import { ClientTaskType, ProjectType, TaskType } from "./types";
+import { ClientProjectType, ClientTaskType, ProjectType, TaskType } from "./types";
 import {
 	fetchTasksFromServer,
 	postTaskToServer,
 	fetchProjectsFromServer,
 	markTaskAsDeletedOnServer,
 	toggleTaskCompletedOnServer,
+	postProjectToServer,
 } from "./utils";
 
 let didFetch = false;
@@ -56,6 +57,20 @@ function App() {
 				const newTask = await response.json();
 				setTasks([...tasks, newTask]);
 				console.log(`task ${newTask.id}, "${newTask.title}" added`);
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
+	// function to add a project to the project list
+	async function addProject(project: ClientProjectType) {
+		try {
+			const response = await postProjectToServer(project);
+			if (response.ok) {
+				const newProject = await response.json();
+				setProjects([...projects, newProject]);
+				console.log(`project ${newProject.id}, "${newProject.title}" added`);
 			}
 		} catch (error) {
 			console.log(error);
@@ -141,6 +156,7 @@ function App() {
 						<AllProjects
 							tasks={tasks}
 							projects={projects}
+							addProject={addProject}
 							isFetchingProjects={isFetchingProjects}
 							deleteTask={deleteTask}
 							toggleTaskCompleted={toggleCompleted}
