@@ -1,36 +1,6 @@
 import { useState } from "react";
 import { ClientTaskType, ProjectType } from "../../types";
-import styled from "styled-components";
-
-const StyledFormContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-`;
-
-const StyledForm = styled.form`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-`;
-
-const StyledInput = styled.input`
-	margin: 5px;
-	padding: 5px;
-	border-radius: 5px;
-	border: 1px solid black;
-`;
-
-const StyledButton = styled.button`
-	margin: 10px;
-	padding: 5px, 10px;
-	border-radius: 5px;
-	border: none;
-	background-color: blue;
-	color: white;
-	font-weight: bold;
-	cursor: pointer;
-`;
+import { StyledButton, StyledForm, StyledFormContainer, StyledInput } from "../styles";
 
 type TaskFormProps = {
 	addTask: (task: ClientTaskType) => void;

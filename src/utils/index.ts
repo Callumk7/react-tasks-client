@@ -5,4 +5,9 @@ export {
 	// markTaskAsCompletedOnServer,
 	toggleTaskCompletedOnServer,
 } from "./tasksApi";
-export { fetchProjectsFromServer, createProject } from "./projectsApi";
+
+export {
+	fetchProjectsFromServer,
+	createProject,
+	postProjectToServer,
+} from "./projectsApi";

@@ -1,10 +1,11 @@
-import { Project } from "../components";
-import { ProjectType, TaskType } from "../types";
+import { Project, ProjectForm } from "../components";
+import { ClientProjectType, ProjectType, TaskType } from "../types";
 
 interface AllProjectsProps {
 	tasks: TaskType[];
 	projects: ProjectType[];
 	isFetchingProjects: boolean;
+	addProject: (project: ClientProjectType) => void;
 	deleteTask: (id: number) => void;
 	toggleTaskCompleted: (task: TaskType) => void;
 }
@@ -16,11 +17,13 @@ export const AllProjects = ({
 	tasks,
 	projects,
 	isFetchingProjects,
+	addProject,
 	deleteTask,
 	toggleTaskCompleted,
 }: AllProjectsProps) => {
 	return (
 		<div>
+			<ProjectForm addProject={addProject} />
 			<h1>All Projects</h1>
 			{isFetchingProjects && <p>Loading...</p>}
 
