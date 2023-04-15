@@ -1,4 +1,4 @@
-import { Project } from "../components";
+import { Project, ProjectForm } from "../components";
 import { ProjectType, TaskType } from "../types";
 
 interface AllProjectsProps {
@@ -21,6 +21,7 @@ export const AllProjects = ({
 }: AllProjectsProps) => {
 	return (
 		<div>
+			<ProjectForm />
 			<h1>All Projects</h1>
 			{isFetchingProjects && <p>Loading...</p>}
 
