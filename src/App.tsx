@@ -13,12 +13,8 @@ import {
 	postTaskToServer,
 	fetchProjectsFromServer,
 	markTaskAsDeletedOnServer,
-	// markTaskAsCompletedOnServer,
 	toggleTaskCompletedOnServer,
 } from "./utils";
-
-// styles
-import "./App.css";
 
 let didFetch = false;
 
