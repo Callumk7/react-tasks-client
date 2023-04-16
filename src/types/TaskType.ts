@@ -7,6 +7,8 @@ export interface TaskType {
 	deleted: boolean;
 	projectId?: number;
 	createdAt: string;
+	dueDate?: string;
+	listPosition?: number;
 }
 
 export interface ClientTaskType {
@@ -18,4 +20,5 @@ export interface ClientTaskType {
 	deleted: boolean;
 	projectId?: number;
 	createdAt?: string;
+	listPositition?: number;
 }

@@ -1,6 +1,6 @@
 // react imports
 import { useEffect, useState } from "react";
-import { Link, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 // components and pages
 import { TaskForm } from "./components";
@@ -16,7 +16,6 @@ import {
 	toggleTaskCompletedOnServer,
 	postProjectToServer,
 } from "./utils";
-import { StyledNavBar } from "./components/styles";
 import { NavBar } from "./components/navigation/NavBar";
 
 let didFetch = false;
