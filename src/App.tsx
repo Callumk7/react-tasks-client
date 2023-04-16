@@ -16,6 +16,8 @@ import {
 	toggleTaskCompletedOnServer,
 	postProjectToServer,
 } from "./utils";
+import { StyledNavBar } from "./components/styles";
+import { NavBar } from "./components/navigation/NavBar";
 
 let didFetch = false;
 
@@ -115,22 +117,7 @@ function App() {
 
 	return (
 		<div className="App">
-			<header>
-				<nav>
-					<ul>
-						<li>
-							<Link to="/tasks">Tasks</Link>
-						</li>
-						<li>
-							<Link to="/">Home</Link>
-						</li>
-						<li>
-							<Link to="/projects">Projects</Link>
-						</li>
-					</ul>
-				</nav>
-			</header>
-
+			<NavBar />
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route

@@ -33,6 +33,8 @@ export const theme = {
 		muted: colorPalette.beige.primary,
 		highlight: colorPalette.yellow.secondary,
 		warning: colorPalette.red.primary,
+		white: colorPalette.white,
+		black: colorPalette.black,
 	},
 
 	fonts: {
