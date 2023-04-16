@@ -37,7 +37,6 @@ export const ProjectForm = ({ addProject }: ProjectFormProps) => {
 
 	return (
 		<div>
-			<h1>Project Form</h1>
 			<StyledFormContainer>
 				<StyledForm onSubmit={handleSubmit}>
 					<StyledInput
