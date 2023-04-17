@@ -6,6 +6,7 @@ interface AllProjectsProps {
 	projects: ProjectType[];
 	isFetchingProjects: boolean;
 	addProject: (project: ClientProjectType) => void;
+	archiveTask: (id: number) => void;
 	deleteTask: (id: number) => void;
 	toggleTaskCompleted: (task: TaskType) => void;
 }
@@ -15,6 +16,7 @@ export const AllProjects = ({
 	projects,
 	isFetchingProjects,
 	addProject,
+	archiveTask,
 	deleteTask,
 	toggleTaskCompleted,
 }: AllProjectsProps) => {
@@ -32,6 +34,7 @@ export const AllProjects = ({
 							)}
 							key={project.id}
 							project={project}
+							archiveTask={archiveTask}
 							deleteTask={deleteTask}
 							toggleTaskCompleted={toggleTaskCompleted}
 						/>
