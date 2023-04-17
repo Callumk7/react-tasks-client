@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ClientTaskType, ProjectType } from "../../types";
-import { StyledButton, StyledForm, StyledFormContainer, StyledInput } from "../styles";
+import { StyledForm, StyledFormContainer, StyledInput } from "../styles";
 import { PrimaryButton } from "../styles/Button";
 
 type TaskFormProps = {
