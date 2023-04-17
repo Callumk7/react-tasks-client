@@ -2,6 +2,7 @@ export {
 	fetchTasksFromServer,
 	postTaskToServer,
 	markTaskAsDeletedOnServer,
+	markTaskAsArchivedOnServer,
 	// markTaskAsCompletedOnServer,
 	toggleTaskCompletedOnServer,
 } from "./tasksApi";

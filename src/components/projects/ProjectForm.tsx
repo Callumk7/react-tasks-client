@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ClientProjectType } from "../../types";
-import { StyledButton, StyledForm, StyledFormContainer, StyledInput } from "../styles";
+import { StyledForm, StyledFormContainer, StyledInput } from "../styles";
+import { PrimaryButton } from "../styles/Button";
 
 interface ProjectFormProps {
 	addProject: (project: ClientProjectType) => void;
@@ -50,7 +51,7 @@ export const ProjectForm = ({ addProject }: ProjectFormProps) => {
 						onChange={handleProjectBodyChange}
 					></StyledInput>
 
-					<StyledButton>New Project</StyledButton>
+					<PrimaryButton type="submit">Add Project</PrimaryButton>
 				</StyledForm>
 			</StyledFormContainer>
 		</div>

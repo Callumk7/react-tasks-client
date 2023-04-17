@@ -6,25 +6,23 @@ interface AllProjectsProps {
 	projects: ProjectType[];
 	isFetchingProjects: boolean;
 	addProject: (project: ClientProjectType) => void;
+	archiveTask: (id: number) => void;
 	deleteTask: (id: number) => void;
 	toggleTaskCompleted: (task: TaskType) => void;
 }
-
-// I want to display the tasks that are associated with each project
-// I fetch all tasks and projects, but I need to associate the tasks with the projects
 
 export const AllProjects = ({
 	tasks,
 	projects,
 	isFetchingProjects,
 	addProject,
+	archiveTask,
 	deleteTask,
 	toggleTaskCompleted,
 }: AllProjectsProps) => {
 	return (
 		<div>
 			<ProjectForm addProject={addProject} />
-			<h1>All Projects</h1>
 			{isFetchingProjects && <p>Loading...</p>}
 
 			{projects &&
@@ -36,6 +34,7 @@ export const AllProjects = ({
 							)}
 							key={project.id}
 							project={project}
+							archiveTask={archiveTask}
 							deleteTask={deleteTask}
 							toggleTaskCompleted={toggleTaskCompleted}
 						/>

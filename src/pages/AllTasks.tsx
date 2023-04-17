@@ -6,6 +6,7 @@ interface AllTasksProps {
 	projects: ProjectType[];
 	isFetchingTasks: boolean;
 	addTask: (task: ClientTaskType) => void;
+	archiveTask: (id: number) => void;
 	deleteTask: (id: number) => void;
 	toggleTaskCompleted: (task: TaskType) => void;
 }
@@ -15,22 +16,27 @@ export const AllTasks = ({
 	projects,
 	isFetchingTasks,
 	addTask,
+	archiveTask,
 	deleteTask,
 	toggleTaskCompleted,
 }: AllTasksProps) => {
+	// Sort the tasks by created time
+	const sortedTasks = tasks.sort((a, b) => {
+		return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+	});
+
 	return (
 		<div>
-			<h1>All Tasks</h1>
-			<h2>Add a task form</h2>
 			<TaskForm addTask={addTask} projects={projects} />
 			{isFetchingTasks && <p>Loading...</p>}
 
-			{tasks &&
-				tasks.map((task: TaskType) => {
+			{sortedTasks &&
+				sortedTasks.map((task: TaskType) => {
 					return (
 						<Task
 							key={task.id}
 							task={task}
+							archiveTask={archiveTask}
 							deleteTask={deleteTask}
 							toggleTaskCompleted={toggleTaskCompleted}
 						/>
