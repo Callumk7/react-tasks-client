@@ -1,3 +1,4 @@
+import moment from "moment";
 import { TaskType } from "../../types";
 import {
 	StyledTask,
@@ -14,6 +15,9 @@ interface TaskProps {
 	toggleTaskCompleted: (task: TaskType) => void;
 }
 
+//
+// COMPONENT
+//
 export const Task = ({
 	task,
 	deleteTask,
@@ -43,7 +47,12 @@ export const Task = ({
 	return (
 		<StyledTask>
 			<StyledTaskTitle>{task.title}</StyledTaskTitle>
-			<StyledTaskBody>{task.body}</StyledTaskBody>
+			<StyledTaskBody>
+				<div>{task.body}</div>
+				<div>
+					DUE: {task.dueDate && moment(task.dueDate).format("ddd, MMM YYYY")}
+				</div>
+			</StyledTaskBody>
 			<StyledTaskCheckbox
 				type="checkbox"
 				onChange={handleCompletedToggled}

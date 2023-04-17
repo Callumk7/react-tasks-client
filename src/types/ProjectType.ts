@@ -9,6 +9,7 @@ export interface ProjectType {
 	deleted: boolean;
 	tasks?: TaskType[];
 	createdAt: string;
+	dueDate?: string;
 }
 
 export interface ClientProjectType {
@@ -20,4 +21,5 @@ export interface ClientProjectType {
 	deleted: boolean;
 	tasks?: TaskType[];
 	createdAt?: string;
+	dueDate?: string;
 }
