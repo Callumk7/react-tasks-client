@@ -10,9 +10,6 @@ interface AllProjectsProps {
 	toggleTaskCompleted: (task: TaskType) => void;
 }
 
-// I want to display the tasks that are associated with each project
-// I fetch all tasks and projects, but I need to associate the tasks with the projects
-
 export const AllProjects = ({
 	tasks,
 	projects,
@@ -24,7 +21,6 @@ export const AllProjects = ({
 	return (
 		<div>
 			<ProjectForm addProject={addProject} />
-			<h1>All Projects</h1>
 			{isFetchingProjects && <p>Loading...</p>}
 
 			{projects &&

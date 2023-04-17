@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ClientTaskType, ProjectType } from "../../types";
 import { StyledButton, StyledForm, StyledFormContainer, StyledInput } from "../styles";
+import { PrimaryButton } from "../styles/Button";
 
 type TaskFormProps = {
 	addTask: (task: ClientTaskType) => void;
@@ -68,7 +69,7 @@ export const TaskForm = ({ addTask, projects }: TaskFormProps) => {
 						</option>
 					))}
 				</select>
-				<StyledButton>Add a new task</StyledButton>
+				<PrimaryButton type="submit">Add Task</PrimaryButton>
 			</StyledForm>
 		</StyledFormContainer>
 	);

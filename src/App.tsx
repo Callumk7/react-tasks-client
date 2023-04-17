@@ -15,6 +15,7 @@ import {
 	markTaskAsDeletedOnServer,
 	toggleTaskCompletedOnServer,
 	postProjectToServer,
+	markTaskAsArchivedOnServer,
 } from "./utils";
 import { NavBar } from "./components/navigation/NavBar";
 
@@ -96,6 +97,23 @@ function App() {
 		}
 	}
 
+	async function archiveTask(id: number) {
+		try {
+			const task = tasks.find((task) => task.id === id);
+			if (task) {
+				const response = await markTaskAsArchivedOnServer(id);
+				if (response.ok) {
+					setTasks(tasks.filter((task) => task.id !== id));
+					console.log(`task ${id} archived`);
+				}
+			} else {
+				console.log(`task ${id} not found`);
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
 	// function to mark a task as completed in the server
 	async function toggleCompleted(task: TaskType) {
 		try {
@@ -127,6 +145,7 @@ function App() {
 							projects={projects}
 							isFetchingTasks={isFetchingTasks}
 							addTask={addTask}
+							archiveTask={archiveTask}
 							deleteTask={deleteTask}
 							toggleTaskCompleted={toggleCompleted}
 						/>
@@ -144,6 +163,7 @@ function App() {
 							projects={projects}
 							addProject={addProject}
 							isFetchingProjects={isFetchingProjects}
+							archiveTask={archiveTask}
 							deleteTask={deleteTask}
 							toggleTaskCompleted={toggleCompleted}
 						/>

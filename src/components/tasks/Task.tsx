@@ -10,13 +10,25 @@ import { PrimaryButton, WarningButton } from "../styles/Button";
 interface TaskProps {
 	task: TaskType;
 	deleteTask: (id: number) => void;
+	archiveTask: (id: number) => void;
 	toggleTaskCompleted: (task: TaskType) => void;
 }
 
-export const Task = ({ task, deleteTask, toggleTaskCompleted }: TaskProps) => {
+export const Task = ({
+	task,
+	deleteTask,
+	archiveTask,
+	toggleTaskCompleted,
+}: TaskProps) => {
 	const handleDelete = () => {
 		if (typeof task.id === "number") {
 			deleteTask(task.id);
+		}
+	};
+
+	const handleArchive = () => {
+		if (typeof task.id === "number") {
+			archiveTask(task.id);
 		}
 	};
 
@@ -39,6 +51,7 @@ export const Task = ({ task, deleteTask, toggleTaskCompleted }: TaskProps) => {
 			/>
 			<WarningButton onClick={handleDelete}>Delete</WarningButton>
 			<PrimaryButton onClick={handleEdit}>Edit</PrimaryButton>
+			<PrimaryButton onClick={handleArchive}>Archive</PrimaryButton>
 		</StyledTask>
 	);
 };
