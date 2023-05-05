@@ -2,6 +2,8 @@ import { useState } from "react";
 import { ClientTaskType, ProjectType } from "../../types";
 import { StyledForm, StyledFormContainer, StyledInput } from "../styles";
 import { PrimaryButton } from "../styles/Button";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 type TaskFormProps = {
 	addTask: (task: ClientTaskType) => void;
@@ -12,6 +14,7 @@ export const TaskForm = ({ addTask, projects }: TaskFormProps) => {
 	const [taskTitle, setTaskTitle] = useState("");
 	const [taskBody, setTaskBody] = useState("");
 	const [taskProjectId, setTaskProjectId] = useState<number | undefined>(1);
+	const [dueDate, setDueDate] = useState<Date>(new Date());
 
 	// handle changes to the title field
 	const handleTaskTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,6 +28,10 @@ export const TaskForm = ({ addTask, projects }: TaskFormProps) => {
 		setTaskBody(value);
 	};
 
+	const handleDueDateChange = (date: Date) => {
+		setDueDate(date);
+	};
+
 	// handle form submission
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -35,6 +42,7 @@ export const TaskForm = ({ addTask, projects }: TaskFormProps) => {
 			archived: false,
 			deleted: false,
 			createdAt: new Date().toISOString(),
+			dueDate: dueDate.toISOString(),
 			projectId: taskProjectId,
 		};
 		addTask(newTask);
@@ -61,6 +69,7 @@ export const TaskForm = ({ addTask, projects }: TaskFormProps) => {
 					value={taskBody}
 					onChange={handleTaskBodyChange}
 				></StyledInput>
+				<DatePicker selected={dueDate} onChange={handleDueDateChange} />
 
 				<select onChange={handleProjectChange}>
 					{projects.map((project) => (

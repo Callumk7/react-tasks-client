@@ -135,6 +135,12 @@ function App() {
 	return (
 		<div className="App">
 			<NavBar />
+			<Router />
+		</div>
+	);
+
+	function Router() {
+		return (
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route
@@ -171,8 +177,8 @@ function App() {
 				/>
 				<Route path="*" element={<NotFound />} />
 			</Routes>
-		</div>
-	);
+		);
+	}
 }
 
 export default App;

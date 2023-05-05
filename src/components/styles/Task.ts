@@ -16,7 +16,7 @@ export const StyledTaskTitle = styled.h2`
 	color: ${theme.colors.primary};
 `;
 
-export const StyledTaskBody = styled.p`
+export const StyledTaskBody = styled.div`
 	font-family: ${theme.fonts.primary};
 	font-size: 1rem;
 	color: ${theme.colors.text};

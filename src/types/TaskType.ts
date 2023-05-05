@@ -20,5 +20,6 @@ export interface ClientTaskType {
 	deleted: boolean;
 	projectId?: number;
 	createdAt?: string;
+	dueDate?: string;
 	listPositition?: number;
 }
