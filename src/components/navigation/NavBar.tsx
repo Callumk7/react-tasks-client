@@ -1,11 +1,17 @@
-import { StyledLink, StyledNavBar } from "../styles";
+import { Link } from "react-router-dom";
 
 export const NavBar = () => {
 	return (
-		<StyledNavBar>
-			<StyledLink to="/">Home</StyledLink>
-			<StyledLink to="/tasks">Tasks</StyledLink>
-			<StyledLink to="/projects">Projects</StyledLink>
-		</StyledNavBar>
+		<div className="navbar bg-primary">
+			<Link className="btn-ghost btn p-4 text-lg font-bold" to={"/"}>
+				Home
+			</Link>
+			<Link className="btn-ghost btn p-4 text-lg font-bold" to={"/tasks"}>
+				Tasks
+			</Link>
+			<Link className="btn-ghost btn p-4 text-lg font-bold" to={"/projects"}>
+				Projects
+			</Link>
+		</div>
 	);
 };

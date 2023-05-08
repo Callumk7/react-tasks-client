@@ -5,6 +5,7 @@ export default {
 		extend: {},
 	},
     daisyui: {
+        logs: false,
         themes: [
             {
                 mytheme: {
@@ -15,7 +16,7 @@ export default {
                     "base-100": "#F6F7F8",
                     "info": "#89C9EB",
                     "success": "#1DE276",
-                    "warning": "#F8B53A",
+                    "warning": "#F8B5A3",
                     "error": "#F56687",
                 } 
             },
