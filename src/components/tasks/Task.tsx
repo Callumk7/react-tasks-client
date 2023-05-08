@@ -46,8 +46,17 @@ export const Task = ({
 				className="checkbox absolute right-4 top-4"
 				checked={task.completed}
 			></input>
-			<h2 className="mb-2 ml-1  text-xl font-bold">{task.title}</h2>
-			<div className="ml-1">{task.body}</div>
+			<div
+				tabIndex={0}
+				className="rounded-box collapse border border-base-300 bg-base-100"
+			>
+				<div className="collapse-title text-xl font-medium outline-none">
+					{task.title}
+				</div>
+				<div className="collapse-content">
+					<p>{task.body}</p>
+				</div>
+			</div>
 			<div className="ml-1">
 				<span className="font-bold">DUE:</span>
 				{moment(task.dueDate).format("MMM Do YYYY")}
@@ -59,10 +68,16 @@ export const Task = ({
 				>
 					Delete
 				</button>
-				<button className="btn-outline btn-sm btn m-1" onClick={handleArchive}>
+				<button
+					className="btn-outline btn-sm btn m-1"
+					onClick={handleArchive}
+				>
 					Archive
 				</button>
-				<button className="btn-outline btn-sm btn m-1" onClick={handleEdit}>
+				<button
+					className="btn-outline btn-sm btn m-1"
+					onClick={handleEdit}
+				>
 					Edit
 				</button>
 			</div>
