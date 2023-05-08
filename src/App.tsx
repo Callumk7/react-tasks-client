@@ -21,6 +21,17 @@ import { NavBar } from "./components/navigation/NavBar";
 
 let didFetch = false;
 
+function TailwindTest() {
+    return (
+        <div>
+            <h1 className="text-3xl font-bold p-20 underline">Hello world!</h1>
+            <p className="text-red-300">
+                This is some more tailwind styling
+            </p>
+        </div>
+    );
+}
+
 function App() {
     // App contains the state for all tasks and projects for the user
     const [tasks, setTasks] = useState<TaskType[]>([]);
@@ -134,6 +145,8 @@ function App() {
 
     return (
         <div className="App">
+            <h1>Task Tracker</h1>
+            <TailwindTest />
             <NavBar />
             <Router />
         </div>
