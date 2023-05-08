@@ -24,10 +24,8 @@ let didFetch = false;
 function TailwindTest() {
     return (
         <div>
-            <h1 className="text-3xl font-bold p-20 underline">Hello world!</h1>
-            <p className="text-red-300">
-                This is some more tailwind styling
-            </p>
+            <h1 className="p-20 text-3xl font-bold underline">Hello world!</h1>
+            <p className="text-primary">This is some more tailwind styling</p>
         </div>
     );
 }
